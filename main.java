@@ -9,18 +9,20 @@ public class main{
         frame.add(screen);
         keyboard listener = new keyboard();
         frame.addKeyListener(listener);
-        int fx = (int)(Math.random()*30);
-        int fy = (int)(Math.random()*30);
+        int fx = (int)(Math.random()*5) + 1;
+        int fy = (int)(Math.random()*5) + 1;
         screen.setFood(fx,fy);
         while(listener.contin){
             if(s.headX == fx && s.headY == fy){
                 s.growing = true;
-                fx = (int)(Math.random()*30);
-                fy = (int)(Math.random()*30);
+                fx = (int)(Math.random()*25) + 1;
+                fy = (int)(Math.random()*25) + 1;
                 screen.setFood(fx,fy);
             }
             s.move(listener.direction);
             screen.drawing();
+            if(s.collided())
+                listener.contin = false;
             try{
                 Thread.sleep(300);
             }
@@ -28,5 +30,6 @@ public class main{
                 System.out.println(e);
             }
         }
+        System.out.println("The snake lived to be " + s.tail.size() + " blocks long.");
     }
 }

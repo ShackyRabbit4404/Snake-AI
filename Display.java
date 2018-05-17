@@ -19,8 +19,10 @@ public class Display extends JPanel{
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+        g.setColor(Color.GRAY);
+        g.fillRect(0,0,540,540);
         g.setColor(Color.BLACK);
-        g.fillRect(0,0,1000,1000);
+        g.fillRect(20,20,500,500);
         g.setColor(Color.WHITE);
         for(Box b: snake.tail){
             g.fillRect(b.getX()*20,b.getY()*20,20,20);

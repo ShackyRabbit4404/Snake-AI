@@ -36,4 +36,18 @@ public class Snake{
         tail.add(new Box(tailX,tailY));
         tail.get(tail.size()-2).connect(tail.get(tail.size()-1));
     }
+    public boolean collided(){
+        if(isOnEdge())
+            return true;
+        for(int i = 1; i < tail.size(); i++){
+            if(headX == tail.get(i).getX() && headY == tail.get(i).getY())
+                return true;
+        }
+        return false;
+    }
+    public boolean isOnEdge(){
+        if(headX == 0 || headX == 26 || headY == 0 || headY == 26)
+            return true;
+        return false;
+    }
 }
