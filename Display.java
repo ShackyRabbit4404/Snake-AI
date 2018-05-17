@@ -23,9 +23,9 @@ public class Display extends JPanel{
         g.fillRect(0,0,1000,1000);
         g.setColor(Color.WHITE);
         for(Box b: snake.tail){
-            g.fillRect(b.getX()*10,b.getY()*10,10,10);
+            g.fillRect(b.getX()*20,b.getY()*20,20,20);
         }
         g.setColor(Color.RED);
-        g.fillRect(foodX*10,foodY*10,10,10);
+        g.fillRect(foodX*20,foodY*20,20,20);
     }
 }

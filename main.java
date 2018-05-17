@@ -9,20 +9,20 @@ public class main{
         frame.add(screen);
         keyboard listener = new keyboard();
         frame.addKeyListener(listener);
-        int fx = (int)(Math.random()*90);
-        int fy = (int)(Math.random()*90);
+        int fx = (int)(Math.random()*30);
+        int fy = (int)(Math.random()*30);
         screen.setFood(fx,fy);
         while(listener.contin){
             if(s.headX == fx && s.headY == fy){
                 s.growing = true;
-                fx = (int)(Math.random()*90);
-                fy = (int)(Math.random()*90);
+                fx = (int)(Math.random()*30);
+                fy = (int)(Math.random()*30);
                 screen.setFood(fx,fy);
             }
             s.move(listener.direction);
             screen.drawing();
             try{
-                Thread.sleep(150);
+                Thread.sleep(300);
             }
             catch(Exception e){
                 System.out.println(e);
