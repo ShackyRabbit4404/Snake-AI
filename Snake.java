@@ -32,6 +32,14 @@ public class Snake{
             grow();
         }
     }
+    public boolean contains(int x,int y){
+        for(int i = 1; i < tail.size(); i++){
+            if(tail.get(i).getX() == x && tail.get(i).getY() == y){
+                return true;
+            }
+        }
+        return false;
+    }
     public void grow(){
         tail.add(new Box(tailX,tailY));
         tail.get(tail.size()-2).connect(tail.get(tail.size()-1));
@@ -46,7 +54,7 @@ public class Snake{
         return false;
     }
     public boolean isOnEdge(){
-        if(headX == 0 || headX == 26 || headY == 0 || headY == 26)
+        if(headX == 0 || headX == 21 || headY == 0 || headY == 21)
             return true;
         return false;
     }
