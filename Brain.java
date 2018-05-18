@@ -25,10 +25,13 @@ public class Brain{
         int count = 0;
         for(int[] arr: map){
             for(int a: arr){
-                System.out.println(count);
                 inputZone.get(count).input((double)a);
+                //System.out.println(count + ": " + inputZone.get(count).getInputVal());
                 count++;
             }
+        }
+        for(neuron n: hiddenLayer1){
+            System.out.println(n.getInputVal());
         }
         return outputZone.get(0).getInputVal();
     }

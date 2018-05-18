@@ -32,7 +32,7 @@ public class main{
                 System.out.println();
             }
             */
-            
+            creature.resetInputVals();
             if(s.collided())
                 listener.contin = false;
             try{
