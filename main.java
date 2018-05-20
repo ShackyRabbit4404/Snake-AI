@@ -19,7 +19,7 @@ public class main{
             input[i] = Math.random();
             hidden1[i] = Math.random();
         }
-        Creature creature = new Creature(input,hidden1,output);
+        Creature creature = new Creature(input,hidden1,output,1);
         while(listener.contin){
             if(s.headX == fx && s.headY == fy){
                 s.growing = true;
@@ -44,7 +44,7 @@ public class main{
             if(s.collided())
                 listener.contin = false;
             try{
-                Thread.sleep(300);
+                Thread.sleep(100);
             }
             catch(Exception e){
                 System.out.println(e);
