@@ -12,7 +12,14 @@ public class main{
         int fx = (int)(Math.random()*20) + 1;
         int fy = (int)(Math.random()*20) + 1;
         screen.setFood(fx,fy);
-        Brain creature = new Brain();
+        double[] input = new double[400];
+        double[] hidden1 = new double[400];
+        double output = Math.random();
+        for(int i = 0; i < 400; i++){
+            input[i] = Math.random();
+            hidden1[i] = Math.random();
+        }
+        Creature creature = new Creature(input,hidden1,output);
         while(listener.contin){
             if(s.headX == fx && s.headY == fy){
                 s.growing = true;
@@ -22,7 +29,8 @@ public class main{
             }
             s.move(listener.direction);
             screen.drawing();
-            System.out.println(creature.think(getMap(s,fx,fy)));
+            listener.direction = (int)(creature.brain.think(getMap(s,fx,fy))%5);
+            //System.out.println("Output " + (creature.think(getMap(s,fx,fy))%5));
             /*
             //draw map
             for(int[] arr: getMap(s,fx,fy)){
@@ -32,7 +40,7 @@ public class main{
                 System.out.println();
             }
             */
-            creature.resetInputVals();
+            creature.brain.resetInputVals();
             if(s.collided())
                 listener.contin = false;
             try{

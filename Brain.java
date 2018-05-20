@@ -3,18 +3,27 @@ public class Brain{
     ArrayList<neuron> inputZone;
     ArrayList<neuron> hiddenLayer1;
     ArrayList<neuron> outputZone;
-    public Brain(){
+    public Brain(double[] input, double[] hidden1, double output){
         inputZone = new ArrayList<neuron>();
         hiddenLayer1 = new ArrayList<neuron>();
         outputZone = new ArrayList<neuron>();
         for(int i = 0; i < 400; i++){
-            inputZone.add(new neuron(false));
+            inputZone.add(new neuron(false,input[i]));
         }
         System.out.println("size() " + inputZone.size());
         for(int i = 0; i < 100; i++){
-            hiddenLayer1.add(new neuron(true));
+            hiddenLayer1.add(new neuron(true,hidden1[i]));
         }
-        outputZone.add(new neuron(false));
+        outputZone.add(new neuron(false,output));
+        connectNet();
+    }
+    public void connectNet(){
+        for(neuron n: inputZone){
+            n.connect(hiddenLayer1);
+        }
+        for(neuron n: hiddenLayer1){
+            n.connect(outputZone);
+        }
     }
     public void resetInputVals(){
         for(neuron n: hiddenLayer1){
@@ -26,13 +35,20 @@ public class Brain{
         for(int[] arr: map){
             for(int a: arr){
                 inputZone.get(count).input((double)a);
-                //System.out.println(count + ": " + inputZone.get(count).getInputVal());
                 count++;
             }
         }
+        /*
+        for(neuron n: inputZone){
+            System.out.println(n.getInputVal());
+        }
+        System.out.println("-----------------------------------------------------------");
         for(neuron n: hiddenLayer1){
             System.out.println(n.getInputVal());
         }
+        System.out.println("-----------------------------------------------------------");
+        */
         return outputZone.get(0).getInputVal();
+        
     }
 }
