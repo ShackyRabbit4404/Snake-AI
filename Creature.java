@@ -12,4 +12,13 @@ public class Creature{
         outputWeight = output;
         int number = n;
     }
+    public int getLivedTo(){
+        return livedTo;
+    }
+    public int act(int[][] m){
+        return (int)brain.think(m);
+    }
+    public void reset(){
+        brain.resetInputVals();
+    }
 }

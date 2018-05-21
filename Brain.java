@@ -26,9 +26,13 @@ public class Brain{
         }
     }
     public void resetInputVals(){
+        for(neuron n: inputZone){
+            n.setInputVal(0.0);
+        }
         for(neuron n: hiddenLayer1){
             n.setInputVal(0.0);
         }
+        outputZone.get(0).setInputVal(0.0);
     }
     public double think(int[][] map){
         int count = 0;
