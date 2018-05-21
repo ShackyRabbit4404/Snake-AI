@@ -7,10 +7,10 @@ public class Snake{
     private int tailY;
     boolean growing;
     public Snake(){
-        headX = 5;
-        headY = 5;
-        tailX = 5;
-        tailY = 5;
+        headX = 10;
+        headY = 10;
+        tailX = 10;
+        tailY = 10;
         growing = false;
         tail = new ArrayList<Box>();
         tail.add(new Box(5,5));

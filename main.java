@@ -13,7 +13,9 @@ public class main{
         int fy = (int)(Math.random()*20) + 1;
         screen.setFood(fx,fy);
         Generation g = new Generation(1);
+        Timer timeRun = new Timer(10000,listener);
         for(int i = 0; i < 100; i++){
+            (new Thread(timeRun)).start();
             fx = (int)(Math.random()*20) + 1;
             fy = (int)(Math.random()*20) + 1;
             while(listener.contin){
@@ -23,11 +25,12 @@ public class main{
                     fy = (int)(Math.random()*20) + 1;
                     screen.setFood(fx,fy);
                 }
-                System.out.println(g.get(i).act(getMap(s,fx,fy)));
+                //System.out.println(g.get(i).act(getMap(s,fx,fy)));
                 listener.direction = g.get(i).act(getMap(s,fx,fy))%4;
                 s.move(listener.direction);
                 screen.drawing(i);
-                g.get(0).reset();
+                //print(g.get(i));
+                g.get(i).reset();
                 if(s.collided())
                     listener.contin = false;
                 try{
@@ -43,7 +46,12 @@ public class main{
             System.out.println("The snake lived to be " + s.tail.size() + " blocks long.");
         }
     }
-
+    public static void print(Creature c){
+        for(neuron n: c.brain.hiddenLayer1){
+            System.out.println(n.getInputVal());
+        }
+        System.out.println("--------------------------------------------------------------");
+    }
     public static int[][] getMap(Snake s,int x,int y){
         int[][] ret = new int[20][20];
         for(int row = 0; row < ret.length; row++){
@@ -55,10 +63,10 @@ public class main{
                     ret[row][col] = 2;
                 }
                 else if(row == s.headX && col == s.headY){
-                    ret[row][col] = 3;
+                    ret[row][col] = 6;
                 }
                 else if(row == x && col == y){
-                    ret[x][y] = 4;    
+                    ret[x][y] = 5;    
                 }
                 else{
                     ret[row][col] = 0;
