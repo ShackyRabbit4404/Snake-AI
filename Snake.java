@@ -16,14 +16,18 @@ public class Snake{
         tail.add(new Box(5,5));
     }
     public void move(int direction){
-        if(direction == 0)
+        if(direction == 0){
             headY--;
-        else if(direction == 1)
+        }
+        else if(direction == 1){
             headX++;
-        else if(direction == 2)
+        }
+        else if(direction == 2){
             headY++;
-        else if(direction == 3)
+        }
+        else if(direction == 3){
             headX--;
+        }
         tailX = tail.get(tail.size()-1).getX();
         tailY = tail.get(tail.size()-1).getY();
         tail.get(0).setLocation(headX,headY);

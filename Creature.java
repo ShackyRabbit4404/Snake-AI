@@ -3,6 +3,8 @@ public class Creature{
     private double[] inputZoneWeights;
     private double[] hiddenLayer1Weights;
     private double outputWeight;
+    private int blocksMoved;
+    private int[] prevPosition;
     private int livedTo;
     int number;
     public Creature(double[] input, double[] hidden1, double output,int n){

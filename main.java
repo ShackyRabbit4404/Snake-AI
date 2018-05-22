@@ -14,6 +14,8 @@ public class main{
         screen.setFood(fx,fy);
         Generation g = new Generation(1);
         Timer timeRun = new Timer(10000,listener);
+        int direction = 1;
+        int prevDirection = 3;
         for(int i = 0; i < 100; i++){
             (new Thread(timeRun)).start();
             fx = (int)(Math.random()*20) + 1;
@@ -26,15 +28,41 @@ public class main{
                     screen.setFood(fx,fy);
                 }
                 //System.out.println(g.get(i).act(getMap(s,fx,fy)));
-                listener.direction = g.get(i).act(getMap(s,fx,fy))%4;
-                s.move(listener.direction);
+                direction = g.get(i).act(getMap(s,fx,fy))%4;
+                if(direction == prevDirection){
+                    if(direction == 0){
+                        direction = 2;
+                    }
+                    else if(direction == 1){
+                        direction = 3;
+                    }
+                    else if(direction == 2){
+                        direction = 0;
+                    }
+                    else if(direction == 3){
+                        direction = 1;
+                    }
+                }
+                if(direction == 0){
+                    prevDirection = 2;
+                }
+                else if(direction == 1){
+                    prevDirection = 3;
+                }
+                else if(direction == 2){
+                    prevDirection = 0;
+                }
+                else if(direction == 3){
+                    prevDirection = 1;
+                }
+                s.move(direction);
                 screen.drawing(i);
                 //print(g.get(i));
                 g.get(i).reset();
                 if(s.collided())
                     listener.contin = false;
                 try{
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                 }
                 catch(Exception e){
                     System.out.println(e);
@@ -46,12 +74,14 @@ public class main{
             System.out.println("The snake lived to be " + s.tail.size() + " blocks long.");
         }
     }
+
     public static void print(Creature c){
         for(neuron n: c.brain.hiddenLayer1){
             System.out.println(n.getInputVal());
         }
         System.out.println("--------------------------------------------------------------");
     }
+
     public static int[][] getMap(Snake s,int x,int y){
         int[][] ret = new int[20][20];
         for(int row = 0; row < ret.length; row++){
