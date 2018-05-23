@@ -22,6 +22,10 @@ public class neuron{
             n.input(inputVal);
         }
     }
+    public void compute(){
+        if(isHiddenLayer)
+            Math.pow(.25,(int)inputVal);
+    }
     public void connect(ArrayList<neuron> n){
         connections = n;
     }

@@ -53,7 +53,6 @@ public class Snake{
             return true;
         for(int i = 1; i < tail.size(); i++){
             if(headX == tail.get(i).getX() && headY == tail.get(i).getY()){
-                System.out.println("Hit the tail");
                 return true;
             }
         }
@@ -61,7 +60,6 @@ public class Snake{
     }
     public boolean isOnEdge(){
         if(headX == 0 || headX == 21 || headY == 0 || headY == 21){
-            System.out.println("Hit the wall");
             return true;
         }
         return false;

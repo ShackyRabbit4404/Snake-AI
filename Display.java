@@ -6,10 +6,14 @@ public class Display extends JPanel{
     private int foodX;
     private int foodY;
     private int creatureNumber;
+    private int genNumber;
     //test
     public Display(Snake s){
         super();
         snake = s;
+    }
+    public void setGen(int g){
+        genNumber = g;
     }
     public void drawing(int n){
         creatureNumber = n;
@@ -32,6 +36,7 @@ public class Display extends JPanel{
         g.setColor(Color.RED);
         g.fillRect(foodX*20,foodY*20,20,20);
         g.setColor(Color.BLACK);
+        g.drawString("Generation number: " + genNumber,10,540);
         g.drawString("Creature Number: " + creatureNumber,10,550);
         g.drawString("Creature Head Position (" + snake.headX + "," + snake.headY + ")",10,560);
         g.drawString("Food position (" + foodX + "," + foodY + ")",10,570);

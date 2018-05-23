@@ -2,12 +2,14 @@ import java.util.*;
 public class Generation{
     private int number;
     ArrayList<Creature> creatures;
-    ArrayList<Creature> ranking;
     public Generation(int n){
         number = n;
-        ranking = new ArrayList<Creature>();
         creatures = new ArrayList<Creature>();
         randomGen();
+    }
+    public void setGen(ArrayList<Creature> c,int n){
+        creatures = c;
+        number = n;
     }
     public void randomGen(){
         double[] input = new double[81];
@@ -21,31 +23,47 @@ public class Generation{
             output = Math.random();
             Creature c = new Creature(input,hidden,output,i);
             creatures.add(c);
-            System.out.println(i);
         }
-        System.out.println("creature random gen");
+        System.out.println("Created random gen");
     }
-    public void setRanking(){
+    public ArrayList<Creature> newGen(ArrayList<Creature> prevG){
+        ArrayList<Creature> ret = new ArrayList<Creature>();
         int count = 0;
-        while(creatures.size() > 0){
-            Creature temp = creatures.get(count);
-            for(Creature c: creatures){
-                if(c.getScore() > temp.getScore() && rankContains(c) == false)
-                    temp = c;
+        for(int i = 0; i < 10; i++){
+            for(int a = 0; a < 10; a++){
+                double[] inputZone = new double[81];
+                double[] hiddenLayer = new double[81];
+                double output = 0;
+                int mergeCreature = (int)(Math.random() * 100); 
+                double chance;
+                for(int b = 0; b < 81; b++){
+                    chance = Math.random();
+                    if(chance < .75)
+                        inputZone[b] = prevG.get(i).getInput()[b];
+                    else if(chance < .80)
+                        inputZone[b] = Math.random();
+                    else
+                        inputZone[b] = prevG.get(mergeCreature).getHidden()[b];
+                    chance = Math.random();
+                    if(chance < .75)
+                        hiddenLayer[b] = prevG.get(i).getInput()[b];
+                    else if(chance < .80)
+                        hiddenLayer[b] = Math.random();
+                    else
+                        hiddenLayer[b] = prevG.get(mergeCreature).getHidden()[b];
+                }
+                chance = Math.random();
+                if(chance < .75)
+                    output = prevG.get(i).getOutput();
+                else if(chance < .80)
+                    output = Math.random();
+                else 
+                    output = prevG.get(mergeCreature).getOutput();
+                ret.add(new Creature(inputZone,hiddenLayer,output,count));
+                count ++;
             }
-            System.out.println("------ " + temp);
-            ranking.add(temp);
-            creatures.remove(temp);
-            System.out.println(ranking.size());
-            count++;
         }
-    }
-    private boolean rankContains(Creature c){
-        for(Creature a: creatures){
-            if(c.getNumber() == a.getNumber())
-                return true;
-        }
-        return false;
+        return ret;
     }
     public int getGenNum(){
         return number;
