@@ -72,6 +72,7 @@ public class main{
                 }
             }
             g.get(i).setDeathReason(listener.deathR);
+            g.get(i).setLivedTo(s.tail.size());
             listener.contin = true;
             s = new Snake();
             screen.snake = s;
@@ -127,8 +128,8 @@ public class main{
         int[][] map = new int[9][9];
         int rowCount = 0;
         int colCount = 0;
-        for(int row = s.headY-4; row < s.headY+4; row++){
-            for(int col = s.headX-4; col < s.headX+4; col++){
+        for(int row = s.headY-4; row <= s.headY+4; row++){
+            for(int col = s.headX-4; col <= s.headX+4; col++){
                 if ((col == 0 && row >= 0 && row <= 20) || (col == 20 &&  row >= 0 && row <= 20)|| (row == 0 && col >= 0 && col <= 20) || (row == 20 &&  col >= 0 && col <= 20))
                     map[rowCount][colCount] = 1;
                 else if (s.contains(col,row))
