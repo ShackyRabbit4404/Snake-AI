@@ -16,7 +16,7 @@ public class main{
         int direction = 1;
         int prevDirection = 3;
         for(int i = 0; i < 100; i++){
-            //(new Thread(new Timer(3000,listener))).start();
+            (new Thread(new Timer(3000,listener,g.get(i)))).start();
             fx = (int)(Math.random()*20) + 1;
             fy = (int)(Math.random()*20) + 1;
             screen.setFood(fx,fy);
