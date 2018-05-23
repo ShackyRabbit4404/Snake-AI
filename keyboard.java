@@ -4,6 +4,7 @@ public class keyboard extends KeyAdapter
     int direction;
     boolean contin;
     int prevDi;
+    String deathR;
     public keyboard()
     {
         direction = 1;

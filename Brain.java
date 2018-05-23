@@ -7,11 +7,8 @@ public class Brain{
         inputZone = new ArrayList<neuron>();
         hiddenLayer1 = new ArrayList<neuron>();
         outputZone = new ArrayList<neuron>();
-        for(int i = 0; i < 400; i++){
+        for(int i = 0; i < 81; i++){
             inputZone.add(new neuron(false,input[i]));
-        }
-        System.out.println("size() " + inputZone.size());
-        for(int i = 0; i < 100; i++){
             hiddenLayer1.add(new neuron(true,hidden1[i]));
         }
         outputZone.add(new neuron(false,output));

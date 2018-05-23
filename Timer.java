@@ -1,9 +1,11 @@
 public class Timer implements Runnable{
     private int time;
     private keyboard listener;
-    public Timer(int t,keyboard l){
+    Creature cre;
+    public Timer(int t,keyboard l,Creature c){
         time = t;
         listener = l;
+        cre = c;
     }
     public void run(){
         try{
@@ -12,7 +14,9 @@ public class Timer implements Runnable{
         catch(Exception e){
             System.out.println(e);
         }
-        System.out.println("Ran out of time");
-        listener.contin = false;
+        if(cre.getRD() == null){
+            listener.deathR = "ran out of time";
+            listener.contin = false;
+        }
     }
 }

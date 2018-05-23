@@ -7,7 +7,7 @@ public class neuron{
     private boolean isHiddenLayer;
     public neuron(boolean i,double w){
         weight = w;
-        threshold = 10; 
+        threshold = 1; 
         connections = new ArrayList<neuron>();
         inputVal = 0.0;
         isHiddenLayer = i;
@@ -15,9 +15,7 @@ public class neuron{
     public void input(double in){
         inputVal += (in*weight);
         if(!isHiddenLayer || inputVal > threshold)
-        {
             fire();
-        }
     }
     public void fire(){
         for(neuron n: connections){

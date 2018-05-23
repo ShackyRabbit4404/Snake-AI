@@ -9,17 +9,18 @@ public class main{
         frame.add(screen);
         keyboard listener = new keyboard();
         frame.addKeyListener(listener);
-        int fx = (int)(Math.random()*20) + 1;
-        int fy = (int)(Math.random()*20) + 1;
+        int fx = (int)(Math.random()*10) + 1;
+        int fy = (int)(Math.random()*10) + 1;
         screen.setFood(fx,fy);
         Generation g = new Generation(1);
-        Timer timeRun = new Timer(10000,listener);
         int direction = 1;
         int prevDirection = 3;
         for(int i = 0; i < 100; i++){
-            (new Thread(timeRun)).start();
+            //(new Thread(new Timer(3000,listener))).start();
             fx = (int)(Math.random()*20) + 1;
             fy = (int)(Math.random()*20) + 1;
+            screen.setFood(fx,fy);
+            listener.deathR = "";
             while(listener.contin){
                 if(s.headX == fx && s.headY == fy){
                     s.growing = true;
@@ -59,29 +60,49 @@ public class main{
                 screen.drawing(i);
                 //print(g.get(i));
                 g.get(i).reset();
-                if(s.collided())
+                if(s.collided()){
                     listener.contin = false;
+                    listener.deathR = "hit the wall";
+                }
                 try{
-                    Thread.sleep(50);
+                    Thread.sleep(10);
                 }
                 catch(Exception e){
                     System.out.println(e);
                 }
             }
+            g.get(i).setDeathReason(listener.deathR);
             listener.contin = true;
             s = new Snake();
             screen.snake = s;
-            System.out.println("The snake lived to be " + s.tail.size() + " blocks long.");
         }
+        for(Creature c: g.creatures){
+            System.out.println(c);
+        }
+        /*
+        g.setRanking();
+        
+        System.out.println("--------------------------------------------------------------");
+        for(Creature c: g.ranking){
+            System.out.println(c);
+        }
+        */
     }
-
+    public static void printMap(int[][] m){
+        for(int[] arr: m){
+            for(int i: arr){
+               System.out.print(i); 
+            }
+            System.out.println();
+        }
+        System.out.println("--------------------------------------------------------------");
+    }
     public static void print(Creature c){
         for(neuron n: c.brain.hiddenLayer1){
             System.out.println(n.getInputVal());
         }
         System.out.println("--------------------------------------------------------------");
     }
-
     public static int[][] getMap(Snake s,int x,int y){
         int[][] ret = new int[20][20];
         for(int row = 0; row < ret.length; row++){
@@ -103,6 +124,24 @@ public class main{
                 }
             }
         }
-        return ret;
+        int[][] map = new int[9][9];
+        int rowCount = 0;
+        int colCount = 0;
+        for(int row = s.headY-4; row < s.headY+4; row++){
+            for(int col = s.headX-4; col < s.headX+4; col++){
+                if ((col == 0 && row >= 0 && row <= 20) || (col == 20 &&  row >= 0 && row <= 20)|| (row == 0 && col >= 0 && col <= 20) || (row == 20 &&  col >= 0 && col <= 20))
+                    map[rowCount][colCount] = 1;
+                else if (s.contains(col,row))
+                    map[rowCount][colCount] = 2;
+                else if(col == s.headX && row == s.headY)
+                    map[rowCount][colCount] = 3;
+                else if (col == x && row == y)
+                    map[rowCount][colCount] = 4;
+                colCount++;
+            }
+            rowCount++;
+            colCount = 0;
+        }
+        return map;
     }
 }
