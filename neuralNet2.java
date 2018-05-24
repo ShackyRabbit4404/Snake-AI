@@ -49,7 +49,11 @@ public class neuralNet2{
         for(int row = 0; row < values.length; row++){
             hiddenLayerVals[row] = sigmoid(hiddenLayerVals[row]);
         }
+        System.out.println("-----------------------------------------------------------");
         values = multiply(hiddenLayerVals,hiddenToOutputWeights);
+        for(double b: values){
+            System.out.println(b);
+        }
         for(int row = 0; row < values.length; row++){
             values[row] = sigmoid(values[row]);
         }
@@ -57,8 +61,17 @@ public class neuralNet2{
         for(int row = 0; row < hiddenLayerVals.length; row++){
            sum += values[row];
         }
-        //sum = sigmoid(sum);
-        return sum;
+        System.out.println("-----------------------------------");
+        System.out.println(sum);
+        System.out.println("-----------------------------------");
+        sum = (sum-80.99999999)*3;
+        System.out.println(sum);
+        System.out.println("-----------------------------------");
+        if(sum<0)sum = sum*-1;
+        System.out.println(sum);
+        System.out.println("-----------------------------------");
+        sum = sigmoid(sum);
+        return sum*3;
     }
 
 }

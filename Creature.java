@@ -19,13 +19,13 @@ public class Creature implements Comparable {
         //setRandomGenom();
         brain2 = new neuralNet2();
     }
-    public int think2(int[][] map){
+    public int think2(double[][] map){
         brain2.reset();
         double[] input = new double[map.length*map[0].length];
         int count = 0;
         for(int row = 0; row < map.length; row++){
             for(int col = 0; col < map[0].length; col++){
-                input[count] = (double)map[row][col];
+                input[count] = map[row][col];
                 count++;
             }
         }

@@ -34,15 +34,14 @@ public class main{
                         count = 0;
                     }
                     //System.out.println(g.get(i).act(getMap(s,fx,fy)));
+                    /*
                     for(int a = 0; a < 7; a++){
                         System.out.print(g.get(i).genom[a]);
                     }
+                    */
                     //System.out.println(getSenario(getVision(s,getMap(s,fx,fy),direction)));
                     //direction = g.get(i).genom[getSenario(getVision(s,getMap(s,fx,fy),direction))];
-                    System.out.println("-----------------------------------------");
-                    printMap(getMap(s,fx,fy));
-                    System.out.println(g.get(i).think2(getMap(s,fx,fy)));
-                    System.out.println(g.get(i).think2(getMap(s,fx,fy))%4);
+                    
                     System.out.println("-----------------------------------------");
                     direction = g.get(i).think2(getMap(s,fx,fy));
                     if(direction == prevDirection){
@@ -71,7 +70,7 @@ public class main{
                     else if(direction == 3){
                         prevDirection = 1;
                     }
-                    System.out.println(direction);  
+                    //System.out.println(direction);  
                     /*
                     for(neuron n: g.get(i).brain.inputZone){
                     System.out.println("Input val: " + n.getInputVal());
@@ -184,7 +183,7 @@ public class main{
         return view;
     }
 
-    public static int[][] getMap(Snake s,int x,int y){
+    public static double[][] getMap(Snake s,int x,int y){
         int[][] ret = new int[20][20];
         for(int row = 0; row < ret.length; row++){
             for(int col = 0; col < ret[0].length; col++){
@@ -205,19 +204,19 @@ public class main{
                 }
             }
         }
-        int[][] map = new int[9][9];
+        double[][] map = new double[9][9];
         int rowCount = 0;
         int colCount = 0;
         for(int row = s.headY-4; row <= s.headY+4; row++){
             for(int col = s.headX-4; col <= s.headX+4; col++){
                 if ((col == 0 && row >= 0 && row <= 20) || (col == 20 &&  row >= 0 && row <= 20)|| (row == 0 && col >= 0 && col <= 20) || (row == 20 &&  col >= 0 && col <= 20))
-                    map[rowCount][colCount] = 1;
+                    map[rowCount][colCount] = 0.2;
                 else if (s.contains(col,row))
-                    map[rowCount][colCount] = 2;
+                    map[rowCount][colCount] = 0.2;
                 else if(col == s.headX && row == s.headY)
-                    map[rowCount][colCount] = 3;
+                    map[rowCount][colCount] = 0.5;
                 else if (col == x && row == y)
-                    map[rowCount][colCount] = 4;
+                    map[rowCount][colCount] = 1;
                 colCount++;
             }
             rowCount++;
