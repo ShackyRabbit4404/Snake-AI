@@ -8,6 +8,7 @@ public class Creature implements Comparable {
     private int livedTo;
     private String deathReason;
     private int number;
+    private neuralNet2 brain2;
     public Creature(double[] input, double[] hidden1, double output,int n) {
         brain = new Brain(input,hidden1,output);
         inputZoneWeights = input;
@@ -15,7 +16,20 @@ public class Creature implements Comparable {
         outputWeight = output;
         number = n;
         genom = new int[7];
-        setRandomGenom();
+        //setRandomGenom();
+        brain2 = new neuralNet2();
+    }
+    public int think2(int[][] map){
+        brain2.reset();
+        double[] input = new double[map.length*map[0].length];
+        int count = 0;
+        for(int row = 0; row < map.length; row++){
+            for(int col = 0; col < map[0].length; col++){
+                input[count] = (double)map[row][col];
+                count++;
+            }
+        }
+        return ((int)brain2.forward(input))%4;
     }
     public void setRandomGenom(){
         for(int i = 0; i < 7; i++){

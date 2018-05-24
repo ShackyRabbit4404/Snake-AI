@@ -3,7 +3,7 @@ import java.util.*;
 public class main{
     public static void main(){
         JFrame frame = new JFrame();
-        frame.setBounds(0,0,1000,1000);
+        frame.setSize(1000,1000);
         frame.setVisible(true);
         Snake s = new Snake();
         Display screen = new Display(s);
@@ -20,7 +20,6 @@ public class main{
             screen.setGen(genNum);
             for(int i = 0; i < 100; i++){
                 //(new Thread(new Timer(1000,listener,g.get(i)))).start();
-                
                 int count = 0;
                 fx = (int)(Math.random()*20) + 1;
                 fy = (int)(Math.random()*20) + 1;
@@ -38,8 +37,14 @@ public class main{
                     for(int a = 0; a < 7; a++){
                         System.out.print(g.get(i).genom[a]);
                     }
-                    System.out.println(getSenario(getVision(s,getMap(s,fx,fy),direction)));
-                    direction = g.get(i).genom[getSenario(getVision(s,getMap(s,fx,fy),direction))];
+                    //System.out.println(getSenario(getVision(s,getMap(s,fx,fy),direction)));
+                    //direction = g.get(i).genom[getSenario(getVision(s,getMap(s,fx,fy),direction))];
+                    System.out.println("-----------------------------------------");
+                    printMap(getMap(s,fx,fy));
+                    System.out.println(g.get(i).think2(getMap(s,fx,fy)));
+                    System.out.println(g.get(i).think2(getMap(s,fx,fy))%4);
+                    System.out.println("-----------------------------------------");
+                    direction = g.get(i).think2(getMap(s,fx,fy));
                     if(direction == prevDirection){
                         if(direction == 0){
                             direction = 2;
@@ -66,7 +71,7 @@ public class main{
                     else if(direction == 3){
                         prevDirection = 1;
                     }
-                    System.out.println(direction);
+                    System.out.println(direction);  
                     /*
                     for(neuron n: g.get(i).brain.inputZone){
                     System.out.println("Input val: " + n.getInputVal());
@@ -108,11 +113,11 @@ public class main{
                 screen.snake = s;
             }
             Collections.sort(g.creatures);
-            System.out.println(genNum);
+            //System.out.println(genNum);
             for(Creature c: g.creatures){
                 System.out.println(c);
             }
-            System.out.println("--------------------------------------------------------------");
+            //System.out.println("--------------------------------------------------------------");
             g.setGen(g.newGen(g.creatures),genNum + 1);
         }
         /*
@@ -218,6 +223,6 @@ public class main{
             rowCount++;
             colCount = 0;
         }
-        return ret;
+        return map;
     }
 }
