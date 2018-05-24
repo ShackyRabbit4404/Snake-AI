@@ -57,7 +57,7 @@ public class neuralNet2{
         for(int row = 0; row < hiddenLayerVals.length; row++){
            sum += values[row];
         }
-        sum = sigmoid(sum);
+        //sum = sigmoid(sum);
         return sum;
     }
 
