@@ -1,21 +1,19 @@
 import java.util.*;
 public class neuron{
     private double weight;
-    private int threshold;
+    private double threshold;
     private ArrayList<neuron> connections;
     private double inputVal;
     private boolean isHiddenLayer;
     public neuron(boolean i,double w){
         weight = w;
-        threshold = 1; 
+        threshold = .2; 
         connections = new ArrayList<neuron>();
         inputVal = 0.0;
         isHiddenLayer = i;
     }
     public void input(double in){
         inputVal += (in*weight);
-        if(!isHiddenLayer || inputVal > threshold)
-            fire();
     }
     public void fire(){
         for(neuron n: connections){
@@ -23,8 +21,9 @@ public class neuron{
         }
     }
     public void compute(){
-        if(isHiddenLayer)
-            Math.pow(.25,(int)inputVal);
+        inputVal = 1/(1 + Math.exp(inputVal));
+        if(inputVal >= threshold)
+            fire();
     }
     public void connect(ArrayList<neuron> n){
         connections = n;

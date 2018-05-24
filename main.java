@@ -12,9 +12,9 @@ public class main{
         frame.addKeyListener(listener);
         int fx = (int)(Math.random()*10) + 1;
         int fy = (int)(Math.random()*10) + 1;
-        screen.setFood(fx,fy);
+        screen.setFood(fx,fy);  
         Generation g = new Generation(1);
-        for(int genNum = 1; genNum < 51; genNum++){
+        for(int genNum = 1; genNum < 201; genNum++){
             int direction = 1;
             int prevDirection = 3;
             screen.setGen(genNum);
@@ -61,9 +61,21 @@ public class main{
                     else if(direction == 3){
                         prevDirection = 1;
                     }
+                    /*
+                    for(neuron n: g.get(i).brain.inputZone){
+                        System.out.println("Input val: " + n.getInputVal());
+                    }
+                    System.out.println("-------------------------------------------------");
+                    for(neuron n: g.get(i).brain.hiddenLayer1){
+                        System.out.println("Input val: " + n.getInputVal());
+                    }
+                    System.out.println("-------------------------------------------------");
+                    System.out.println(g.get(i).brain.outputZone.get(0).getInputVal());
+                    System.out.println(((int)g.get(i).brain.outputZone.get(0).getInputVal())%4);
+                    System.out.println("-------------------------------------------------");
+                    */
                     s.move(direction);
                     //screen.drawing(i);
-                    //print(g.get(i));
                     g.get(i).reset();
                     if(s.collided()){
                         listener.contin = false;
@@ -76,7 +88,7 @@ public class main{
                     }
                     /*
                     try{
-                        Thread.sleep(5);
+                        Thread.sleep(10);
                     }
                     catch(Exception e){
                         System.out.println(e);
@@ -121,7 +133,12 @@ public class main{
         }
         System.out.println("--------------------------------------------------------------");
     }
-
+    public static int[][] getVision(Snake s, int x,int y){
+        int[][] view = new int[8][3];
+        
+        return view;
+    }
+    
     public static int[][] getMap(Snake s,int x,int y){
         int[][] ret = new int[20][20];
         for(int row = 0; row < ret.length; row++){

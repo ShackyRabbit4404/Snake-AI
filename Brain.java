@@ -39,6 +39,12 @@ public class Brain{
                 count++;
             }
         }
+        for(neuron n: inputZone){
+            n.fire();
+        }
+        for(neuron n: hiddenLayer1){
+            n.compute();
+        }
         /*
         for(neuron n: inputZone){
             System.out.println(n.getInputVal());
@@ -49,7 +55,7 @@ public class Brain{
         }
         System.out.println("-----------------------------------------------------------");
         */
-        return outputZone.get(0).getInputVal();
+        return outputZone.get(0).getInputVal() *4;
         
     }
 }
