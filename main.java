@@ -14,12 +14,13 @@ public class main{
         int fy = (int)(Math.random()*10) + 1;
         screen.setFood(fx,fy);  
         Generation g = new Generation(1);
-        for(int genNum = 1; genNum < 201; genNum++){
+        for(int genNum = 1; genNum < 3; genNum++){
             int direction = 1;
             int prevDirection = 3;
             screen.setGen(genNum);
             for(int i = 0; i < 100; i++){
                 //(new Thread(new Timer(1000,listener,g.get(i)))).start();
+                
                 int count = 0;
                 fx = (int)(Math.random()*20) + 1;
                 fy = (int)(Math.random()*20) + 1;
@@ -34,7 +35,11 @@ public class main{
                         count = 0;
                     }
                     //System.out.println(g.get(i).act(getMap(s,fx,fy)));
-                    direction = g.get(i).act(getMap(s,fx,fy))%4;
+                    for(int a = 0; a < 7; a++){
+                        System.out.print(g.get(i).genom[a]);
+                    }
+                    System.out.println(getSenario(getVision(s,getMap(s,fx,fy),direction)));
+                    direction = g.get(i).genom[getSenario(getVision(s,getMap(s,fx,fy),direction))];
                     if(direction == prevDirection){
                         if(direction == 0){
                             direction = 2;
@@ -61,21 +66,22 @@ public class main{
                     else if(direction == 3){
                         prevDirection = 1;
                     }
+                    System.out.println(direction);
                     /*
                     for(neuron n: g.get(i).brain.inputZone){
-                        System.out.println("Input val: " + n.getInputVal());
+                    System.out.println("Input val: " + n.getInputVal());
                     }
                     System.out.println("-------------------------------------------------");
                     for(neuron n: g.get(i).brain.hiddenLayer1){
-                        System.out.println("Input val: " + n.getInputVal());
+                    System.out.println("Input val: " + n.getInputVal());
                     }
                     System.out.println("-------------------------------------------------");
                     System.out.println(g.get(i).brain.outputZone.get(0).getInputVal());
                     System.out.println(((int)g.get(i).brain.outputZone.get(0).getInputVal())%4);
                     System.out.println("-------------------------------------------------");
-                    */
+                     */
                     s.move(direction);
-                    //screen.drawing(i);
+                    screen.drawing(i);
                     g.get(i).reset();
                     if(s.collided()){
                         listener.contin = false;
@@ -86,14 +92,14 @@ public class main{
                         listener.contin = false;
                         listener.deathR = "ran out of time";
                     }
-                    /*
+
                     try{
-                        Thread.sleep(10);
+                        Thread.sleep(500);
                     }
                     catch(Exception e){
                         System.out.println(e);
                     }
-                    */
+
                 }
                 g.get(i).setDeathReason(listener.deathR);
                 g.get(i).setLivedTo(s.tail.size());
@@ -117,6 +123,31 @@ public class main{
          */
     }
 
+    public static int getSenario(int[] v){
+        if(v[0] == 0 && v[1] == 0){
+            return 0;
+        }
+        if(v[0] == 1 && v[1] == 0){
+            return 1;
+        }
+        if(v[0] == 1 && v[1] == 1){
+            return 2;
+        }
+        if(v[0] == 0 && v[1] == 1){
+            return 3;
+        }
+        if(v[0] == 2 && v[1] == 0){
+            return 4;
+        }
+        if(v[0] == 0 && v[1] == 2){
+            return 5;
+        }
+        if(v[0] == 2 && v[1] == 1){
+            return 6;
+        }
+        return 7;
+    }
+
     public static void printMap(int[][] m){
         for(int[] arr: m){
             for(int i: arr){
@@ -127,18 +158,27 @@ public class main{
         System.out.println("--------------------------------------------------------------");
     }
 
-    public static void print(Creature c){
-        for(neuron n: c.brain.hiddenLayer1){
-            System.out.println(n.getInputVal());
+    public static int[] getVision(Snake s,int[][] m,int d){
+        int[] view = new int[2];
+        if(d == 0){
+            view[0] = m[s.headX-1][s.headY-1];
+            view[1] = m[s.headX][s.headY-1];
         }
-        System.out.println("--------------------------------------------------------------");
-    }
-    public static int[][] getVision(Snake s, int x,int y){
-        int[][] view = new int[8][3];
-        
+        else if(d == 1){
+            view[0] = m[s.headX+1][s.headY-1];
+            view[1] = m[s.headX+1][s.headY];
+        }
+        else if(d == 2){
+            view[0] = m[s.headX+1][s.headY+1];
+            view[1] = m[s.headX][s.headY+1];
+        }
+        else{
+            view[0] = m[s.headX-1][s.headY+1];
+            view[1] = m[s.headX-1][s.headY];
+        }
         return view;
     }
-    
+
     public static int[][] getMap(Snake s,int x,int y){
         int[][] ret = new int[20][20];
         for(int row = 0; row < ret.length; row++){
@@ -147,13 +187,13 @@ public class main{
                     ret[row][col] = 1;
                 }
                 else if(s.contains(row,col)){
-                    ret[row][col] = 2;
+                    ret[row][col] = 1;
                 }
                 else if(row == s.headX && col == s.headY){
                     ret[row][col] = 6;
                 }
                 else if(row == x && col == y){
-                    ret[x][y] = 5;    
+                    ret[x][y] = 2;    
                 }
                 else{
                     ret[row][col] = 0;
@@ -178,6 +218,6 @@ public class main{
             rowCount++;
             colCount = 0;
         }
-        return map;
+        return ret;
     }
 }

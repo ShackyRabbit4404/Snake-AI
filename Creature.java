@@ -1,5 +1,6 @@
 public class Creature implements Comparable {
     Brain brain;
+    int[] genom;
     private double[] inputZoneWeights;
     private double[] hiddenLayer1Weights;
     private double outputWeight;
@@ -13,6 +14,13 @@ public class Creature implements Comparable {
         hiddenLayer1Weights = hidden1;
         outputWeight = output;
         number = n;
+        genom = new int[7];
+        setRandomGenom();
+    }
+    public void setRandomGenom(){
+        for(int i = 0; i < 7; i++){
+            genom[i] = (int)(Math.random()*4);
+        }
     }
     public double[] getInput(){
         return inputZoneWeights;
