@@ -4,10 +4,10 @@ public class neuralNet2{
     private double[] hiddenLayerVals;
     private double[] values;
     public neuralNet2(){
-        inputToHiddenWeights = new double[81][81];
-        hiddenToOutputWeights = new double[81][81];
+        inputToHiddenWeights = new double[4][4];
+        hiddenToOutputWeights = new double[4][4];
         values = new double[1];
-        hiddenLayerVals = new double[81];
+        hiddenLayerVals = new double[4];
         randomizeWeigths();
     }
     
@@ -25,16 +25,16 @@ public class neuralNet2{
     }
         
     public void reset(){
-        for(int i = 0; i < 81; i++){
+        for(int i = 0; i < hiddenLayerVals.length; i++){
             hiddenLayerVals[i] = 0;
         }
     }
     
     public double[] multiply(double[] input,double[][] w){
-       double[] ret = new double[81];
-       for(int i = 0; i < 81; i++){
-           for(int a = 0; a < 81; a++){
-               ret[i] += input[a]*w[i][a];
+       double[] ret = new double[input.length];
+       for(int i = 0; i < input.length; i++){
+           for(int a = 0; a < input.length; a++){
+               ret[i] += input[i]*w[i][a];
            }
        }
        return ret;
@@ -46,14 +46,12 @@ public class neuralNet2{
 
     public double forward(double[] inputVals){
         hiddenLayerVals = multiply(inputVals,inputToHiddenWeights);
-        for(int row = 0; row < values.length; row++){
+        for(int row = 0; row < hiddenLayerVals.length; row++){
             hiddenLayerVals[row] = sigmoid(hiddenLayerVals[row]);
         }
         System.out.println("-----------------------------------------------------------");
+        values = new double[hiddenLayerVals.length];
         values = multiply(hiddenLayerVals,hiddenToOutputWeights);
-        for(double b: values){
-            System.out.println(b);
-        }
         for(int row = 0; row < values.length; row++){
             values[row] = sigmoid(values[row]);
         }
@@ -61,17 +59,11 @@ public class neuralNet2{
         for(int row = 0; row < hiddenLayerVals.length; row++){
            sum += values[row];
         }
-        System.out.println("-----------------------------------");
         System.out.println(sum);
-        System.out.println("-----------------------------------");
-        sum = (sum-80.99999999)*3;
-        System.out.println(sum);
-        System.out.println("-----------------------------------");
-        if(sum<0)sum = sum*-1;
-        System.out.println(sum);
-        System.out.println("-----------------------------------");
         sum = sigmoid(sum);
-        return sum*3;
+        System.out.println(sum);
+        System.out.println(sum*4);
+        return sum*4;
     }
 
 }

@@ -43,7 +43,13 @@ public class main{
                     //direction = g.get(i).genom[getSenario(getVision(s,getMap(s,fx,fy),direction))];
                     
                     System.out.println("-----------------------------------------");
-                    direction = g.get(i).think2(getMap(s,fx,fy));
+                    double[] inputV = new double[4];
+                    inputV[0] = (double)s.headX/10;
+                    inputV[1] = (double)s.headY/10;
+                    inputV[2] = (double)fx/10;
+                    inputV[3] = (double)fy/10;
+                    direction = g.get(i).think2(inputV);
+                    /*
                     if(direction == prevDirection){
                         if(direction == 0){
                             direction = 2;
@@ -70,6 +76,7 @@ public class main{
                     else if(direction == 3){
                         prevDirection = 1;
                     }
+                    */
                     //System.out.println(direction);  
                     /*
                     for(neuron n: g.get(i).brain.inputZone){

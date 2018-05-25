@@ -51,11 +51,13 @@ public class Snake{
     public boolean collided(){
         if(isOnEdge())
             return true;
+            /*
         for(int i = 1; i < tail.size(); i++){
             if(headX == tail.get(i).getX() && headY == tail.get(i).getY()){
                 return true;
             }
         }
+        */
         return false;
     }
     public boolean isOnEdge(){

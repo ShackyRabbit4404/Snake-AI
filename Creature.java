@@ -19,8 +19,9 @@ public class Creature implements Comparable {
         //setRandomGenom();
         brain2 = new neuralNet2();
     }
-    public int think2(double[][] map){
+    public int think2(double[] in){
         brain2.reset();
+        /*
         double[] input = new double[map.length*map[0].length];
         int count = 0;
         for(int row = 0; row < map.length; row++){
@@ -29,7 +30,8 @@ public class Creature implements Comparable {
                 count++;
             }
         }
-        return ((int)brain2.forward(input))%4;
+        */
+        return ((int)brain2.forward(in))%4;
     }
     public void setRandomGenom(){
         for(int i = 0; i < 7; i++){
