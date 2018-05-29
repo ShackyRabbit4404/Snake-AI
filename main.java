@@ -14,7 +14,7 @@ public class main{
         int fy = (int)(Math.random()*10) + 1;
         screen.setFood(fx,fy);  
         Generation g = new Generation(1);
-        for(int genNum = 1; genNum < 3; genNum++){
+        for(int genNum = 1; genNum < 101; genNum++){
             int direction = 1;
             int prevDirection = 3;
             screen.setGen(genNum);
@@ -93,7 +93,7 @@ public class main{
                     System.out.println("-------------------------------------------------");
                      */
                     s.move(direction);
-                    screen.drawing(i);
+                    //screen.drawing(i);
                     g.get(i).reset();
                     if(s.collided()){
                         listener.contin = false;
@@ -104,9 +104,9 @@ public class main{
                         listener.contin = false;
                         listener.deathR = "ran out of time";
                     }
-
+                    
                     try{
-                        Thread.sleep(50);
+                        Thread.sleep(1);
                     }
                     catch(Exception e){
                         System.out.println(e);
