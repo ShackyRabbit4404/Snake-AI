@@ -8,7 +8,7 @@ public class Creature implements Comparable {
     private int livedTo;
     private String deathReason;
     private int number;
-    private neuralNet2 brain2;
+    neuralNet2 brain2;
     public Creature(double[] input, double[] hidden1, double output,int n) {
         brain = new Brain(input,hidden1,output);
         inputZoneWeights = input;

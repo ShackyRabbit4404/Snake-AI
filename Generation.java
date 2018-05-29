@@ -7,6 +7,27 @@ public class Generation{
         creatures = new ArrayList<Creature>();
         randomGen();
     }
+    public ArrayList<Creature> newGen2(){
+        ArrayList<Creature> ret = new ArrayList<Creature>();
+        for(int r = 0; r < 10; r++){
+            for(int a = 0; a < 10; a++){
+                int chance = (int)Math.random()*100;
+                double[][] inToHid1 = creatures.get(r).brain2.getInToHidWeights();
+                double[][] inToHid2 = creatures.get(chance).brain2.getInToHidWeights();
+                double[][] hidToOut1 = creatures.get(r).brain2.getInToHidWeights();
+                double[][] hidToOut2 = creatures.get(chance).brain2.getInToHidWeights();
+                double rand;
+                for(int row = 0; row < inToHid1.length; row++){
+                    for(int col = 0; col < inToHid1[0].length; col++){
+                        rand = Math.random();
+                        if(rand < .25)
+                            inToHid1[row][col] = inToHid2[row][col];
+                    }
+                }
+            }
+        }
+        return ret;
+    }
     public void setGen(ArrayList<Creature> c,int n){
         creatures = c;
         number = n;

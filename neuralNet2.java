@@ -10,7 +10,18 @@ public class neuralNet2{
         hiddenLayerVals = new double[4];
         randomizeWeigths();
     }
-    
+    public void setWeigthsInToHid(double[][] a){
+        inputToHiddenWeights = a;
+    }
+    public double[][] getInToHidWeights(){
+        return inputToHiddenWeights;
+    }
+    public void setWeigthsHidToOut(double[][] a){
+        hiddenToOutputWeights = a;
+    }
+    public double[][] getHidToOutWeights(){
+        return hiddenToOutputWeights;
+    }
     public void randomizeWeigths(){
         for(int row = 0; row < inputToHiddenWeights.length; row++){
             for(int col = 0; col < inputToHiddenWeights[0].length; col++){
