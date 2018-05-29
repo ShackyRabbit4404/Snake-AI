@@ -7,15 +7,17 @@ public class Generation{
         creatures = new ArrayList<Creature>();
         randomGen();
     }
+
     public ArrayList<Creature> newGen2(){
         ArrayList<Creature> ret = new ArrayList<Creature>();
+        int count = 0;
         for(int r = 0; r < 10; r++){
             for(int a = 0; a < 10; a++){
                 int chance = (int)Math.random()*100;
                 double[][] inToHid1 = creatures.get(r).brain2.getInToHidWeights();
                 double[][] inToHid2 = creatures.get(chance).brain2.getInToHidWeights();
-                double[][] hidToOut1 = creatures.get(r).brain2.getInToHidWeights();
-                double[][] hidToOut2 = creatures.get(chance).brain2.getInToHidWeights();
+                double[][] hidToOut1 = creatures.get(r).brain2.getHidToOutWeights();
+                double[][] hidToOut2 = creatures.get(chance).brain2.getHidToOutWeights();
                 double rand;
                 for(int row = 0; row < inToHid1.length; row++){
                     for(int col = 0; col < inToHid1[0].length; col++){
@@ -24,17 +26,26 @@ public class Generation{
                             inToHid1[row][col] = inToHid2[row][col];
                         else if(rand < .30)
                             inToHid1[row][col] = Math.random();
+                        rand = Math.random();
+                        if(rand < .25)
+                            hidToOut1[row][col] = hidToOut2[row][col];
+                        else if(rand < .30)
+                            hidToOut1[row][col] = Math.random();
                     }
                 }
-                
+                creatures.get(count).brain2.setWeigthsInToHid(inToHid1);
+                creatures.get(count).brain2.setWeigthsHidToOut(hidToOut1);
+                count++;
             }
         }
         return ret;
     }
+
     public void setGen(ArrayList<Creature> c,int n){
         creatures = c;
         number = n;
     }
+
     public void randomGen(){
         double[] input = new double[81];
         double[] hidden = new double[81];
@@ -50,6 +61,7 @@ public class Generation{
         }
         System.out.println("Created random gen");
     }
+
     public ArrayList<Creature> newGen(ArrayList<Creature> prevG){
         ArrayList<Creature> ret = new ArrayList<Creature>();
         int count = 0;
@@ -89,9 +101,11 @@ public class Generation{
         }
         return ret;
     }
+
     public int getGenNum(){
         return number;
     }
+
     public Creature get(int i){
         return creatures.get(i);
     }

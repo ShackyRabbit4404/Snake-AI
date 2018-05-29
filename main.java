@@ -44,11 +44,12 @@ public class main{
                     
                     System.out.println("-----------------------------------------");
                     double[] inputV = new double[4];
-                    inputV[0] = (double)s.headX/10;
-                    inputV[1] = (double)s.headY/10;
-                    inputV[2] = (double)fx/10;
-                    inputV[3] = (double)fy/10;
+                    inputV[0] = (double)s.headX/20;
+                    inputV[1] = (double)s.headY/20;
+                    inputV[2] = (double)fx/20;
+                    inputV[3] = (double)fy/20;
                     direction = g.get(i).think2(inputV);
+                    System.out.println(direction);
                     /*
                     if(direction == prevDirection){
                         if(direction == 0){
@@ -105,7 +106,7 @@ public class main{
                     }
 
                     try{
-                        Thread.sleep(500);
+                        Thread.sleep(50);
                     }
                     catch(Exception e){
                         System.out.println(e);
@@ -124,7 +125,8 @@ public class main{
                 System.out.println(c);
             }
             //System.out.println("--------------------------------------------------------------");
-            g.setGen(g.newGen(g.creatures),genNum + 1);
+            //g.setGen(g.newGen(g.creatures),genNum + 1);
+            g.newGen2();
         }
         /*
         System.out.println("--------------------------------------------------------------");

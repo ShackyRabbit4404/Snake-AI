@@ -31,7 +31,7 @@ public class Creature implements Comparable {
             }
         }
         */
-        return ((int)brain2.forward(in))%4;
+        return brain2.forward(in);
     }
     public void setRandomGenom(){
         for(int i = 0; i < 7; i++){
