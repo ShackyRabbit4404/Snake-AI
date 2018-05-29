@@ -22,8 +22,11 @@ public class Generation{
                         rand = Math.random();
                         if(rand < .25)
                             inToHid1[row][col] = inToHid2[row][col];
+                        else if(rand < .30)
+                            inToHid1[row][col] = Math.random();
                     }
                 }
+                
             }
         }
         return ret;

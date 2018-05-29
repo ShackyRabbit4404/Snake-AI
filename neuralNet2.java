@@ -1,12 +1,11 @@
 public class neuralNet2{
     private double[][] inputToHiddenWeights;
-    private double[][] hiddenToOutputWeights;
+    private double[] hiddenToOutputWeights;
     private double[] hiddenLayerVals;
     private double[] values;
     public neuralNet2(){
         inputToHiddenWeights = new double[4][4];
-        hiddenToOutputWeights = new double[4][4];
-        values = new double[1];
+        hiddenToOutputWeights = new double[4];
         hiddenLayerVals = new double[4];
         randomizeWeigths();
     }
@@ -16,10 +15,10 @@ public class neuralNet2{
     public double[][] getInToHidWeights(){
         return inputToHiddenWeights;
     }
-    public void setWeigthsHidToOut(double[][] a){
+    public void setWeigthsHidToOut(double[] a){
         hiddenToOutputWeights = a;
     }
-    public double[][] getHidToOutWeights(){
+    public double[] getHidToOutWeights(){
         return hiddenToOutputWeights;
     }
     public void randomizeWeigths(){
@@ -29,9 +28,7 @@ public class neuralNet2{
             }
         }
         for(int row = 0; row < hiddenToOutputWeights.length; row++){
-            for(int col = 0; col < hiddenToOutputWeights[0].length; col++){
-                hiddenToOutputWeights[row][col] = Math.random();
-            }
+            hiddenToOutputWeights[row] = Math.random();
         }
     }
         
@@ -40,7 +37,13 @@ public class neuralNet2{
             hiddenLayerVals[i] = 0;
         }
     }
-    
+    public double[] multiply2(double[] input,double[] w){
+       double[] ret = new double[input.length];
+       for(int i = 0; i < input.length; i++){
+           ret[i] += input[i]*w[i];
+       }
+       return ret;
+    }
     public double[] multiply(double[] input,double[][] w){
        double[] ret = new double[input.length];
        for(int i = 0; i < input.length; i++){
@@ -60,9 +63,9 @@ public class neuralNet2{
         for(int row = 0; row < hiddenLayerVals.length; row++){
             hiddenLayerVals[row] = sigmoid(hiddenLayerVals[row]);
         }
-        System.out.println("-----------------------------------------------------------");
+
         values = new double[hiddenLayerVals.length];
-        values = multiply(hiddenLayerVals,hiddenToOutputWeights);
+        values = multiply2(hiddenLayerVals,hiddenToOutputWeights);
         for(int row = 0; row < values.length; row++){
             values[row] = sigmoid(values[row]);
         }
@@ -70,6 +73,7 @@ public class neuralNet2{
         for(int row = 0; row < hiddenLayerVals.length; row++){
            sum += values[row];
         }
+        System.out.println("-----------------------------------------------------------");
         System.out.println(sum);
         sum = sigmoid(sum);
         System.out.println(sum);
