@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.util.*;
 public class main{
-    public static void main(){
+    public static void main(String[] args){
         JFrame frame = new JFrame();
         frame.setSize(1000,1000);
         frame.setVisible(true);
@@ -14,7 +14,8 @@ public class main{
         int fy = (int)(Math.random()*10) + 1;
         screen.setFood(fx,fy);  
         Generation g = new Generation(1);
-        for(int genNum = 1; genNum < 101; genNum++){
+        Creature best = g.get(0);
+        for(int genNum = 1; genNum < 50001; genNum++){
             int direction = 1;
             int prevDirection = 3;
             screen.setGen(genNum);
@@ -36,48 +37,45 @@ public class main{
                     //System.out.println(g.get(i).act(getMap(s,fx,fy)));
                     /*
                     for(int a = 0; a < 7; a++){
-                        System.out.print(g.get(i).genom[a]);
+                    System.out.print(g.get(i).genom[a]);
                     }
-                    */
+                     */
                     //System.out.println(getSenario(getVision(s,getMap(s,fx,fy),direction)));
                     //direction = g.get(i).genom[getSenario(getVision(s,getMap(s,fx,fy),direction))];
-                    
-                    System.out.println("-----------------------------------------");
                     double[] inputV = new double[4];
                     inputV[0] = (double)s.headX/20;
                     inputV[1] = (double)s.headY/20;
                     inputV[2] = (double)fx/20;
                     inputV[3] = (double)fy/20;
                     direction = g.get(i).think2(inputV);
-                    System.out.println(direction);
                     /*
                     if(direction == prevDirection){
-                        if(direction == 0){
-                            direction = 2;
-                        }
-                        else if(direction == 1){
-                            direction = 3;
-                        }
-                        else if(direction == 2){
-                            direction = 0;
-                        }
-                        else if(direction == 3){
-                            direction = 1;
-                        }
-                    }
                     if(direction == 0){
-                        prevDirection = 2;
+                    direction = 2;
                     }
                     else if(direction == 1){
-                        prevDirection = 3;
+                    direction = 3;
                     }
                     else if(direction == 2){
-                        prevDirection = 0;
+                    direction = 0;
                     }
                     else if(direction == 3){
-                        prevDirection = 1;
+                    direction = 1;
                     }
-                    */
+                    }
+                    if(direction == 0){
+                    prevDirection = 2;
+                    }
+                    else if(direction == 1){
+                    prevDirection = 3;
+                    }
+                    else if(direction == 2){
+                    prevDirection = 0;
+                    }
+                    else if(direction == 3){
+                    prevDirection = 1;
+                    }
+                     */
                     //System.out.println(direction);  
                     /*
                     for(neuron n: g.get(i).brain.inputZone){
@@ -104,14 +102,6 @@ public class main{
                         listener.contin = false;
                         listener.deathR = "ran out of time";
                     }
-                    
-                    try{
-                        Thread.sleep(1);
-                    }
-                    catch(Exception e){
-                        System.out.println(e);
-                    }
-
                 }
                 g.get(i).setDeathReason(listener.deathR);
                 g.get(i).setLivedTo(s.tail.size());
@@ -120,20 +110,53 @@ public class main{
                 screen.snake = s;
             }
             Collections.sort(g.creatures);
-            //System.out.println(genNum);
-            for(Creature c: g.creatures){
-                System.out.println(c);
+            if(g.get(0).getScore() > best.getScore())
+                best = g.get(0);
+            System.out.println(best);
+            System.out.println(genNum);
+            g.creatures = g.newGen2();
+        }
+        int direction = 1;
+        int count = 0;
+        listener.contin = true;
+        fx = 1+((int)Math.random() * 20);
+        fy = 1+((int)Math.random() * 20);
+        while(listener.contin){
+            if(s.headX == fx && s.headY == fy){
+                s.growing = true;
+                fx = (int)(Math.random()*20) + 1;
+                fy = (int)(Math.random()*20) + 1;
+                screen.setFood(fx,fy);
+                count = 0;
             }
-            //System.out.println("--------------------------------------------------------------");
-            //g.setGen(g.newGen(g.creatures),genNum + 1);
-            g.newGen2();
+            double[] inputV = new double[4];
+            inputV[0] = (double)s.headX/20;
+            inputV[1] = (double)s.headY/20;
+            inputV[2] = (double)fx/20;
+            inputV[3] = (double)fy/20;
+            direction = best.think2(inputV);
+            s.move(direction);
+            screen.drawing(1);
+            best.reset();
+            if(s.collided()){
+                listener.contin = false;
+                listener.deathR = "hit the wall";
+            }
+            count ++;
+            if(count > 50){
+                listener.contin = false;
+                listener.deathR = "ran out of time";
+            }
+
+            try{
+                Thread.sleep(500);
+            }
+            catch(Exception e){
+                System.out.println(e);
+            }
+
         }
-        /*
-        System.out.println("--------------------------------------------------------------");
-        for(Creature c: g.ranking){
-        System.out.println(c);
-        }
-         */
+        System.out.println(best);
     }
 
     public static int getSenario(int[] v){

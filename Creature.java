@@ -9,14 +9,18 @@ public class Creature implements Comparable {
     private String deathReason;
     private int number;
     neuralNet2 brain2;
-    public Creature(double[] input, double[] hidden1, double output,int n) {
+    //double[] input, double[] hidden1, double output,
+    public Creature(int n) {
+        /*
         brain = new Brain(input,hidden1,output);
         inputZoneWeights = input;
         hiddenLayer1Weights = hidden1;
         outputWeight = output;
-        number = n;
+        
         genom = new int[7];
         //setRandomGenom();
+        */
+        number = n;
         brain2 = new neuralNet2();
     }
     public int think2(double[] in){
@@ -66,7 +70,7 @@ public class Creature implements Comparable {
         return deathReason;
     }
     public void reset(){
-        brain.resetInputVals();
+        brain2.reset();
     }
     public int getNumber(){
         return number;

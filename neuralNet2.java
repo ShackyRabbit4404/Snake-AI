@@ -15,7 +15,7 @@ public class neuralNet2{
     public double[][] getInToHidWeights(){
         return inputToHiddenWeights;
     }
-    public void setWeigthsHidToOut(double[][] a){
+    public void setWeightsHidToOut(double[][] a){
         hiddenToOutputWeights = a;
     }
     public double[][] getHidToOutWeights(){
@@ -62,10 +62,6 @@ public class neuralNet2{
         double sum = 0;
         for(int row = 0; row < hiddenLayerVals.length; row++){
            values[row] = sigmoid(values[row]);
-        }
-        System.out.println("------------------------------------");
-        for(double b: values){
-            System.out.println(b);
         }
         int largest  = 0;
         for(int i = 0; i < values.length; i++){

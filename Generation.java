@@ -33,8 +33,10 @@ public class Generation{
                             hidToOut1[row][col] = Math.random();
                     }
                 }
-                creatures.get(count).brain2.setWeigthsInToHid(inToHid1);
-                creatures.get(count).brain2.setWeigthsHidToOut(hidToOut1);
+                Creature temp = new Creature(count);
+                temp.brain2.setWeigthsInToHid(inToHid1);
+                temp.brain2.setWeightsHidToOut(hidToOut1);
+                ret.add(temp);
                 count++;
             }
         }
@@ -56,7 +58,8 @@ public class Generation{
                 hidden[a] = Math.random();
             }
             output = Math.random();
-            Creature c = new Creature(input,hidden,output,i);
+            //input,hidden,output,
+            Creature c = new Creature(i);
             creatures.add(c);
         }
         System.out.println("Created random gen");
@@ -95,7 +98,8 @@ public class Generation{
                     output = Math.random();
                 else 
                     output = prevG.get(mergeCreature).getOutput();
-                ret.add(new Creature(inputZone,hiddenLayer,output,count));
+                //inputZone,hiddenLayer,output,
+                ret.add(new Creature(count));
                 count ++;
             }
         }
