@@ -67,6 +67,41 @@ public class main{
         }
         screen.setView("brain");
         screen.paintBrain(best);
+        try{
+            Thread.sleep(10000);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        boolean contin = true;
+        fx = (int)(Math.random()*20) + 1;
+        fy = (int)(Math.random()*20) + 1;
+        s = new Snake();
+        screen.snake = s;
+        int direction = 1;
+        while(contin){
+            if(s.headX == fx && s.headY == fy){
+                s.growing = true;
+                fx = (int)(Math.random()*20) + 1;
+                fy = (int)(Math.random()*20) + 1;
+                screen.setFood(fx,fy);
+            }
+            double[] inputV = new double[4];
+            inputV[0] = (double)s.headX/20;
+            inputV[1] = (double)s.headY/20;
+            inputV[2] = (double)fx/20;
+            inputV[3] = (double)fy/20;
+            direction = g.get(best.getNumber()).think2(inputV);
+            s.move(direction);
+            screen.setView("map brain");
+            screen.drawing(1);
+            try{
+                Thread.sleep(200);
+            }
+            catch(Exception e){
+                System.out.println(e);
+            }
+        }
     }
 
     public static int getSenario(int[] v){
