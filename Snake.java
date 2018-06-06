@@ -15,6 +15,7 @@ public class Snake{
         tail = new ArrayList<Box>();
         tail.add(new Box(5,5));
     }
+
     public void move(int direction){
         if(direction == 0){
             headY--;
@@ -36,6 +37,7 @@ public class Snake{
             grow();
         }
     }
+
     public boolean contains(int x,int y){
         for(int i = 1; i < tail.size(); i++){
             if(tail.get(i).getX() == x && tail.get(i).getY() == y){
@@ -44,22 +46,25 @@ public class Snake{
         }
         return false;
     }
+
     public void grow(){
         tail.add(new Box(tailX,tailY));
         tail.get(tail.size()-2).connect(tail.get(tail.size()-1));
     }
-    public boolean collided(){
+
+    public boolean collided(boolean game){
         if(isOnEdge())
             return true;
-            /*
-        for(int i = 1; i < tail.size(); i++){
-            if(headX == tail.get(i).getX() && headY == tail.get(i).getY()){
-                return true;
+        if(game){
+            for(int i = 1; i < tail.size(); i++){
+                if(headX == tail.get(i).getX() && headY == tail.get(i).getY()){
+                    return true;
+                }
             }
         }
-        */
         return false;
     }
+
     public boolean isOnEdge(){
         if(headX == 0 || headX == 21 || headY == 0 || headY == 21){
             return true;

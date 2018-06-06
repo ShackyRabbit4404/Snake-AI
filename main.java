@@ -15,12 +15,12 @@ public class main{
         screen.setFood(fx,fy);  
         Generation g = new Generation(1);
         Creature best = g.get(0);
-        for(int genNum = 1; genNum < 50001; genNum++){
+        screen.setView("brain");
+        for(int genNum = 1; genNum < 10001; genNum++){
             int direction = 1;
             int prevDirection = 3;
             screen.setGen(genNum);
             for(int i = 0; i < 100; i++){
-                //(new Thread(new Timer(1000,listener,g.get(i)))).start();
                 int count = 0;
                 fx = (int)(Math.random()*20) + 1;
                 fy = (int)(Math.random()*20) + 1;
@@ -34,66 +34,15 @@ public class main{
                         screen.setFood(fx,fy);
                         count = 0;
                     }
-                    //System.out.println(g.get(i).act(getMap(s,fx,fy)));
-                    /*
-                    for(int a = 0; a < 7; a++){
-                    System.out.print(g.get(i).genom[a]);
-                    }
-                     */
-                    //System.out.println(getSenario(getVision(s,getMap(s,fx,fy),direction)));
-                    //direction = g.get(i).genom[getSenario(getVision(s,getMap(s,fx,fy),direction))];
                     double[] inputV = new double[4];
                     inputV[0] = (double)s.headX/20;
                     inputV[1] = (double)s.headY/20;
                     inputV[2] = (double)fx/20;
                     inputV[3] = (double)fy/20;
                     direction = g.get(i).think2(inputV);
-                    /*
-                    if(direction == prevDirection){
-                    if(direction == 0){
-                    direction = 2;
-                    }
-                    else if(direction == 1){
-                    direction = 3;
-                    }
-                    else if(direction == 2){
-                    direction = 0;
-                    }
-                    else if(direction == 3){
-                    direction = 1;
-                    }
-                    }
-                    if(direction == 0){
-                    prevDirection = 2;
-                    }
-                    else if(direction == 1){
-                    prevDirection = 3;
-                    }
-                    else if(direction == 2){
-                    prevDirection = 0;
-                    }
-                    else if(direction == 3){
-                    prevDirection = 1;
-                    }
-                     */
-                    //System.out.println(direction);  
-                    /*
-                    for(neuron n: g.get(i).brain.inputZone){
-                    System.out.println("Input val: " + n.getInputVal());
-                    }
-                    System.out.println("-------------------------------------------------");
-                    for(neuron n: g.get(i).brain.hiddenLayer1){
-                    System.out.println("Input val: " + n.getInputVal());
-                    }
-                    System.out.println("-------------------------------------------------");
-                    System.out.println(g.get(i).brain.outputZone.get(0).getInputVal());
-                    System.out.println(((int)g.get(i).brain.outputZone.get(0).getInputVal())%4);
-                    System.out.println("-------------------------------------------------");
-                     */
                     s.move(direction);
-                    //screen.drawing(i);
                     g.get(i).reset();
-                    if(s.collided()){
+                    if(s.collided(false)){
                         listener.contin = false;
                         listener.deathR = "hit the wall";
                     }
@@ -116,47 +65,8 @@ public class main{
             System.out.println(genNum);
             g.creatures = g.newGen2();
         }
-        int direction = 1;
-        int count = 0;
-        listener.contin = true;
-        fx = 1+((int)Math.random() * 20);
-        fy = 1+((int)Math.random() * 20);
-        while(listener.contin){
-            if(s.headX == fx && s.headY == fy){
-                s.growing = true;
-                fx = (int)(Math.random()*20) + 1;
-                fy = (int)(Math.random()*20) + 1;
-                screen.setFood(fx,fy);
-                count = 0;
-            }
-            double[] inputV = new double[4];
-            inputV[0] = (double)s.headX/20;
-            inputV[1] = (double)s.headY/20;
-            inputV[2] = (double)fx/20;
-            inputV[3] = (double)fy/20;
-            direction = best.think2(inputV);
-            s.move(direction);
-            screen.drawing(1);
-            best.reset();
-            if(s.collided()){
-                listener.contin = false;
-                listener.deathR = "hit the wall";
-            }
-            count ++;
-            if(count > 50){
-                listener.contin = false;
-                listener.deathR = "ran out of time";
-            }
-
-            try{
-                Thread.sleep(500);
-            }
-            catch(Exception e){
-                System.out.println(e);
-            }
-
-        }
-        System.out.println(best);
+        screen.setView("brain");
+        screen.paintBrain(best);
     }
 
     public static int getSenario(int[] v){

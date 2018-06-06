@@ -29,7 +29,6 @@ public class neuralNet2{
             }
         }
     }
-        
     public void reset(){
         for(int i = 0; i < hiddenLayerVals.length; i++){
             hiddenLayerVals[i] = 0;
@@ -44,11 +43,9 @@ public class neuralNet2{
        }
        return ret;
     }
-    
     public double sigmoid(double d){
         return 1/(1 + Math.pow(Math.E,(-1*d)));
     }
-
     public int forward(double[] inputVals){
         hiddenLayerVals = multiply(inputVals,inputToHiddenWeights);
         for(int row = 0; row < hiddenLayerVals.length; row++){
